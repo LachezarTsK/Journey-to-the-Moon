@@ -55,7 +55,7 @@ public class Solution {
   /**
    * Breadth First Seach:
    * Searches through the connected astronauts in order to calculate 
-   * the total numbere of astronauts per country, in the case when 
+   * the total number of astronauts per country, in the case when 
    * there is more than one astronaut per country.
    *
    * @return An integer, representing the total astronauts for a country.
