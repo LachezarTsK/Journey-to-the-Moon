@@ -8,7 +8,7 @@ import java.util.HashMap;
 public class Solution {
   /**
    * 'connectedAstronauts' maps the connections bewteen all astronauts, 
-   * in the cases when there are more than one per coutry. 
+   * in the cases when there are more than one astronaut per coutry. 
    * Consequently, single atronauts per country are not stored in the map.
    */
   private static Map<Integer, List<Integer>> connectedAstronauts;
