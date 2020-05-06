@@ -1,5 +1,3 @@
-package main.journeytoTheMoon.Map;
-
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
@@ -9,11 +7,11 @@ import java.util.HashMap;
 
 public class Solution {
   /**
-   * 'connectedAstronauts' maps the connections bewteen all astronauts, in th cases when there are
-   * more than one per coutry. Consequantly, single atronauts per country are not stored in the map.
+   * 'connectedAstronauts' maps the connections bewteen all astronauts, 
+   * in the cases when there are more than one per coutry. 
+   * Consequently, single atronauts per country are not stored in the map.
    */
   private static Map<Integer, List<Integer>> connectedAstronauts;
-
   private static List<Integer> astronautsPerCountry;
 
   public static void main(String[] args) {
@@ -30,13 +28,14 @@ public class Solution {
       add_toMap_connectedAstronauts(second, first);
     }
     scanner.close();
-
-    System.out.println(numberOfWays_toChoose_uniquePairsOfAstronauts(numberOfAstronauts));
+    
+    long result = numberOfWays_toChoose_uniquePairsOfAstronauts(numberOfAstronauts);
+    System.out.println(result);
   }
 
   /**
-   * Calculates the number of ways to choose a unique pair of astronauts, where each astronaut in
-   * the pair is from a different country.
+   * Calculates the number of ways to choose a unique pair of astronauts, 
+   * where each astronaut in the pair is from a different country.
    *
    * @return A long value, representing the total number of the described unique pairs.
    */
@@ -54,12 +53,15 @@ public class Solution {
   }
 
   /**
-   * Searches through connected astronauts to calculate the total numbere of astronauts per country,
-   * in the case when there is more than one astronaut per country.
+   * Breadth First Seach:
+   * Searches through the connected astronauts in order to calculate 
+   * the total numbere of astronauts per country, in the case when 
+   * there is more than one astronaut per country.
    *
-   * @return An integer, representing the total astronauts for the searched country.
+   * @return An integer, representing the total astronauts for a country.
    */
   private static int breadthFirstSearch_findAstronautsPerCountry(int start, boolean[] visited) {
+    
     LinkedList<Integer> queue = new LinkedList<Integer>();
     queue.add(start);
     visited[start] = true;
@@ -81,29 +83,30 @@ public class Solution {
   }
 
   /**
-   * Calculates all possible combinations that could form a unique pair, where each astronaut in the
-   * pair is from a different country.
+   * Calculates all possible combinations that could form a unique pair, 
+   * where each astronaut in the pair is from a different country.
    *
    * @return A long value, representing the total number of the described combinations.
    */
   private static long calculate_allPossibleUniquePairs(int numberOfAstronauts) {
+   
     long totalPairs = 0;
-
     for (int i = 0; i < astronautsPerCountry.size() - 1; i++) {
       for (int j = i + 1; j < astronautsPerCountry.size(); j++) {
+       
         // Adds all possible unique pairs between the groups of connected astronauts.
-        totalPairs =
-            totalPairs + (long) astronautsPerCountry.get(i) * (long) astronautsPerCountry.get(j);
+        totalPairs += (long) astronautsPerCountry.get(i) * (long) astronautsPerCountry.get(j);
       }
     }
+    
     // Single astronauts per country.
     long singleAstronauts = (long) numberOfAstronauts - connectedAstronauts.size();
 
     // Adds all possible unique pairs between single astronauts and connected astronauts.
-    totalPairs = totalPairs + singleAstronauts * connectedAstronauts.size();
+    totalPairs += singleAstronauts * connectedAstronauts.size();
 
     // Adds all possible unique pairs among single astronauts themselves.
-    totalPairs = totalPairs + (long) (singleAstronauts * (singleAstronauts - 1)) / 2;
+    totalPairs += (long) (singleAstronauts * (singleAstronauts - 1)) / 2;
 
     return totalPairs;
   }
